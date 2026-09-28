@@ -1,0 +1,46 @@
+.account-label {
+  color: #78899b;
+  font-size: 10px;
+}
+
+.empty-history {
+  min-height: 260px;
+  margin-top: 16px;
+  padding: 34px;
+  border: 1px dashed #dce5ec;
+  border-radius: 9px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.empty-icon {
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #eef5fc;
+  color: #4886bc;
+}
+
+.empty-history h2 {
+  margin: 14px 0 6px;
+  color: #24394f;
+  font: 700 16px Manrope, sans-serif;
+}
+
+.empty-history p {
+  max-width: 400px;
+  margin: 0 0 18px;
+  color: #8190a0;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.empty-history .button-primary {
+  font-size: 10px;
+}

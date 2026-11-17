@@ -1,106 +1,163 @@
-# JOBSAFE AI
+# 🛡️ JOBSAFE AI
+### Explainable AI-Based Job & Internship Fraud Detection and Evidence Verification System
 
-**JOBSAFE AI — Explainable AI-Based Fraud Detection and Evidence Verification System**  
-Project ID: `JOBSAFE-AI-01` · Verify before you apply.
+**Verify before you apply. Protect your career.**
 
-JOBSAFE AI helps people review job and internship opportunities, recruiter messages, LinkedIn information they are authorized to share, and offer letters. It reports transparent risk indicators with their source and limitations. **A risk assessment is not proof of fraud.**
+JOBSAFE AI is a web-based job and internship fraud detection platform designed to help students, fresh graduates, and job seekers identify suspicious recruitment activities before sharing personal information or accepting an offer.
 
-## Current status
+The platform analyzes job descriptions, internship opportunities, recruiter messages, LinkedIn information, and offer-letter details to identify potential fraud indicators and provide understandable risk assessments.
 
-The project includes a login-first React experience, account registration, a responsive verification dashboard, and a FastAPI API. Registration and login use SQLite-backed accounts, salted PBKDF2 password hashes, and expiring bearer sessions. The first analysis pass uses transparent heuristics on user-provided text, URL, company name, and recruiter email. It does not fetch URLs, perform independent company verification, or claim machine-learning validation. Findings are labeled as user-provided evidence; unavailable checks are listed as unverified.
+> **Important:** JOBSAFE AI provides preliminary risk indicators, not definitive proof of fraud or legitimacy. Users should independently verify employers and recruiters before making decisions.
 
-New accounts land on a first-check screen instead of a prefilled dashboard. The checks page shows an empty state until an analysis is completed. Analysis history is not persisted yet, so completed checks are not retained after leaving the page. Document extraction, independently verified sources, model training, PDF export, and the admin dashboard remain planned phases.
+---
 
-## Project structure
+## 🚀 Project Overview
+
+Online job scams and fraudulent internship opportunities can expose job seekers to financial loss, identity theft, and misuse of personal information.
+
+JOBSAFE AI aims to address this problem through a centralized verification platform that combines a responsive web interface, backend API, account authentication, and transparent rule-based analysis.
+
+The system is designed to make recruitment verification easier by highlighting suspicious patterns and explaining why certain information may require further investigation.
+
+## ✨ Key Features
+
+### 1. User Authentication
+- User registration and login.
+- Password hashing using PBKDF2.
+- SQLite-based account storage.
+- Bearer-token authentication with expiring sessions.
+
+### 2. Job Offer Verification
+- Analyze user-submitted job descriptions.
+- Identify suspicious recruitment language.
+- Highlight potential warning signs.
+- Present understandable risk indicators.
+
+### 3. Internship Verification
+- Review internship opportunity details.
+- Identify potentially suspicious requirements.
+- Highlight warning signs in submitted information.
+
+### 4. Recruiter Message Analysis
+- Analyze recruiter messages submitted by users.
+- Identify suspicious phrases and recruitment patterns.
+- Highlight information that requires additional verification.
+
+### 5. LinkedIn Information Analysis
+- Review LinkedIn-related information voluntarily submitted by users.
+- Identify visible inconsistencies and suspicious indicators.
+- Present findings with appropriate limitations.
+
+### 6. Offer Letter Analysis
+- Provide an analysis category for submitted offer-letter information.
+- Identify potential warning signs in the information provided.
+
+*Automated document upload, OCR, and extraction are not currently implemented.*
+
+### 7. Explainable Risk Assessment
+- Transparent rule-based analysis.
+- Risk indicators with understandable explanations.
+- Findings based on user-provided information.
+- Unverified checks are identified rather than presented as confirmed facts.
+
+### 8. Responsive Dashboard
+- Login-first user experience.
+- Account registration.
+- Verification dashboard.
+- First-check screen for new accounts.
+- Navigation between verification categories.
+
+---
+
+## 🛠️ Technology Stack
+
+| Component | Technology |
+|---|---|
+| Frontend | React.js |
+| Frontend tooling | Vite |
+| Backend | Python |
+| Backend framework | FastAPI |
+| Database | SQLite |
+| Authentication | PBKDF2 password hashing |
+| API communication | REST API |
+| Frontend styling | CSS |
+| Version control | Git and GitHub |
+| Frontend hosting | Netlify |
+| Backend hosting | Render (planned deployment) |
+
+---
+
+## 📂 Project Structure
 
 ```text
 jobsafe-ai/
-├── frontend/             # React + Vite user interface
-├── backend/app/          # FastAPI service
-├── uploads/              # Reserved for a future secure document workflow
-├── reports/              # Reserved for generated reports
-├── ml/                   # Reserved for versioned model and training data
-├── docs/
-└── .env.example
+│
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   ├── index.html
+│   ├── package.json
+│   ├── package-lock.json
+│   └── vite.config.js
+│
+├── backend/
+│   ├── app/
+│   │   └── main.py
+│   ├── requirements.txt
+│   └── .venv/
+│
+├── .env.example
+├── .gitignore
+├── package.json
+├── README.md
+└── package-lock.json
 ```
 
-## Requirements
+*The virtual environment is local to development and should not be committed to GitHub.*
 
-- Node.js 20 or newer and npm
-- Python 3.10 or newer
+---
 
-## Run locally
+## 💻 Installation and Setup
 
-Start the backend in a VS Code terminal (from `jobsafe-ai`):
+### Prerequisites
 
-```powershell
+Install the following before running the application:
+
+- Python 3.10 or later
+- Node.js 20 or later
+- npm
+- Visual Studio Code
+- Git
+
+### Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/Sahana1202/jobsafe-ai.git
+```
+
+Navigate into the project:
+
+```bash
+cd jobsafe-ai
+```
+
+### Step 2: Set Up the Backend
+
+Open a terminal in the project directory.
+
+Navigate to the backend:
+
+```bash
 cd backend
-py -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -m uvicorn app.main:app --reload --port 8000
 ```
 
-In a second terminal, start the frontend from `jobsafe-ai`:
+Create a Python virtual environment:
+
+```bash
+py -m venv .venv
+```
+
+Activate the environment in Windows PowerShell:
 
 ```powershell
-npm --prefix frontend install
-npm run dev -- --force
-```
-
-Open the localhost URL printed by Vite (for example `http://localhost:5175`). The site starts at Login; choose **Create an account** to register, then you will be taken to the dashboard. The API health check is at `http://127.0.0.1:8000/api/health`; authenticated checks post to `/api/analyze/{job|internship|linkedin|offer-letter|message}`.
-
-## Analysis and safety limits
-
-- Rules flag phrases and visible mismatches as indicators. A low score is not a legitimacy guarantee.
-- The service only examines submitted fields. It does not currently resolve domains, follow redirects, inspect public registries, or verify people.
-- The current URL checks parse the URL but do not request it. SSRF-safe fetching must be implemented before adding external URL retrieval.
-- File upload and OCR are not active yet. Do not upload sensitive documents to this prototype.
-- The My checks page starts empty. Analysis results currently display in the session only; saved history and statistics are not implemented.
-- The application remains a local prototype. Configure production session security and allowed website origins before publishing user accounts publicly.
-
-## Planned implementation phases
-
-1. Project setup + frontend + backend — foundation present.
-2. Authentication + database — account and session tables present; analysis history is still pending.
-3. Job and internship analysis.
-4. Offer-letter PDF/image extraction with strict type and size controls.
-5. Safe URL and email verification.
-6. Expanded rule-based fraud analysis and transparent risk calculation.
-7. Evidence engine with proof levels, sources, and checked timestamps.
-8. Versioned sample ML model; report metrics only as dataset-specific.
-9. Deterministic explanation provider with optional LLM adapter.
-10. Downloadable PDF reports.
-11. Admin dashboard.
-12. Security and functional tests.
-13. Complete documentation and deployment guidance.
-
-## Environment variables
-
-See `.env.example`. Set `JOBSAFE_DB_PATH` to a persistent mount path on your hosting provider if you want accounts to survive restarts. Set `CORS_ORIGINS` to the exact public frontend URL and build the frontend with `VITE_API_URL` set to the public API URL. API keys remain optional; deterministic explanations are the intended default. Never commit populated secrets.
-
-## Publish online (Render example)
-
-Create a GitHub repository containing only this `jobsafe-ai` project, then connect it to Render. Create two services from that repository:
-
-### API web service
-
-- Root directory: `backend`
-- Build command: `pip install -r requirements.txt`
-- Start command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-- Add a persistent disk mounted at `/var/data` and set `JOBSAFE_DB_PATH=/var/data/jobsafe.db`.
-- Set `CORS_ORIGINS` to the public URL of the frontend static site after it is created.
-
-### Frontend static site
-
-- Root directory: `frontend`
-- Build command: `npm install && npm run build`
-- Publish directory: `dist`
-- Set `VITE_API_URL` to the public API service URL, such as `https://your-api.onrender.com`.
-
-After both deploy, visit the static-site URL. The frontend environment value is read at build time, so redeploy the frontend after changing it. Render web services need to bind to `0.0.0.0` and the assigned `PORT`; Render's free web services can spin down when idle, and persistent disks require a paid web service. See [Render's FastAPI guide](https://render.com/docs/deploy-fastapi), [static-site deployment guide](https://render.com/tutorials/web-service-vs-static-site/static-sites), and [persistent disk documentation](https://render.com/docs/disks).
-
-This remains a prototype: checks are not saved to history, file uploads are not implemented, and the SQLite database is suited to a small demo rather than a multi-user production launch. A production release should use a managed database and stronger session protections.
-
-## License
-
-Educational prototype. Add a project license before redistribution.
+.\.venv\Scripts\
